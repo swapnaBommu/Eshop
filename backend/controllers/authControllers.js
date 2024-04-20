@@ -4,8 +4,8 @@ import ErrorHandler from "../utils/errorHandler.js";
 import sendToken from "../utils/sendToken.js";
 import { getResetPasswordTemplate } from "../utils/emailTemplates.js";
 import sendEmail from "../utils/sendEmail.js";
-
-
+import crypto from "crypto";
+ 
 //Register User =>/api/v1/register
 export const registerUser = catchAsyncErrors(async (req, res, next) =>{
     const {name, email, password} = req.body;
@@ -65,7 +65,7 @@ export const forgotPassword = catchAsyncErrors(async(req, res, next) => {
  
     // Create  reset password url
     const resetUrl = `${process.env.FRONTEND_URL}/api/v1/password/reset/${resetToken}`;
- 
+    console.log("***reseturl",resetUrl);
     const message = getResetPasswordTemplate(user?.name, resetUrl);
  
     try {
@@ -84,6 +84,31 @@ export const forgotPassword = catchAsyncErrors(async(req, res, next) => {
         await user.save();
         return next(new ErrorHandler(error?.message, 500));
     }
+});
+
+// Reset password =>  /api/v1/password/reset/:token
+export const resetPassword = catchAsyncErrors(async(req, res, next) => {
  
-    sendToken(user, 200, res);
+    //Hash the url Token
+    const resetPasswordToken = crypto.createHash("sha256")
+    .update(req.params.token)
+    .digest("hex");
+
+    const user = await User.findOne({
+        resetPasswordToken,
+        resetPasswordExpire: { $gt: Date.now()}
+    });
+    if(!user) {
+        return next(new ErrorHandler('Password reset token is invalid or has been expired', 400));
+    }
+    if(req.body.password !== req.body.confirmPassword){
+        return next(new ErrorHandler('Passwords does not match', 400));
+    }
+
+    //set the new password
+    user.password = req.body.password;
+    //set the user password token to undefined
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpire = undefined;
+ 
 });
