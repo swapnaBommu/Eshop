@@ -44,13 +44,13 @@ export const getProductDetails = catchAsyncError(async (req, res, next) =>{
     });
 });
 
-//update product details => /api/v1/products/:id
+//update product details => /api/v1/admin/products/:id
 export const updateProduct = catchAsyncError(async (req,res, next) =>{
     let product = await Product.findById(req?.params?.id);
     if(!product){
         return next(new ErrorHandler("Product not found",404));
     }
-
+    console.log(req.user);
     product = await Product.findByIdAndUpdate(req?.params?.id,req.body,{new:true});
     res.status(200).json({
         product,
