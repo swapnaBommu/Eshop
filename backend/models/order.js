@@ -61,7 +61,7 @@ const orderSchema = new mongoose.Schema({
             message:"please select the COD or Card"
         },
     },
-    paymentIfo:{
+    paymentInfo:{
         id:String,
         status:String,
     },
