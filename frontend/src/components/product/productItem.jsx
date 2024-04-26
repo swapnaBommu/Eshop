@@ -14,7 +14,7 @@ const productItem = ({product}) => {
                   className="card-body ps-3 d-flex justify-content-center flex-column"
                 >
                   <h5 className="card-title">
-                    <Link to={`/product/product?._id`}>{product?.name}</Link>
+                    <Link to={`/product/${product?._id}`}>{product?.name}</Link>
                   </h5>
                   <div className="ratings mt-auto d-flex">
                     <StarRatings
@@ -31,7 +31,7 @@ const productItem = ({product}) => {
                     </span>
                   </div>
                   <p className="card-text mt-2">{product.price}</p>
-                  <Link to={`/product/product?._id`} id="view_btn" className="btn btn-block">
+                  <Link to={`/product/${product?._id}`} id="view_btn" className="btn btn-block">
                     View Details
                   </Link>
                 </div>

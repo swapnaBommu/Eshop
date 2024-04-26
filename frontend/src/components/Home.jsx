@@ -1,13 +1,13 @@
 import React,{useEffect} from 'react'
 import MetaData from './layout/MetaData'
 import { useGetProductsQuery } from '../redux/api/productsApi';
-import ProductItem from "./product/productItem";
+import ProductItem from "./product/ProductItem";
 import Loader from './layout/Loader';
 import toast from 'react-hot-toast';
 
 const Home = () => {
   const { data,isLoading, error, isError } = useGetProductsQuery();
-  console.log('**************',data);
+  
   useEffect(() => {
     if(isError){
       toast.error(error?.data?.message);
