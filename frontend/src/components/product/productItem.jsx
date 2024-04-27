@@ -7,7 +7,9 @@ const productItem = ({product}) => {
       <div className="card p-3 rounded">
                 <img
                   className="card-img-top mx-auto"
-                  src={product?.images[0]?.url}
+                  src={product?.images[0] ? 
+                      product?.images[0].url :
+                     '/images/default_product.png'}
                   alt={product?.name}
                 />
                 <div
@@ -19,7 +21,7 @@ const productItem = ({product}) => {
                   <div className="ratings mt-auto d-flex">
                     <StarRatings
                       rating={product?.ratings}
-                      starRatedColor="blue"
+                      starRatedColor="#fa9c23"
                       numberOfStars={5}
                       name='rating'
                       starSpacing='1px'

@@ -9,7 +9,12 @@ export const productApi = createApi({
     //query: An endpoint definition that retrieves data
     endpoints:(builder) => ({
         getProducts : builder.query({
-            query: (params) =>"/products" 
+            query: (params) =>({
+                url: "/products",
+                params:{
+                    page : params?.page
+                }
+            }),
         }),
         getProductDetails : builder.query({
             query: (id) => `/products/${id}`,
