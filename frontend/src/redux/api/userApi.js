@@ -33,15 +33,15 @@ export const userApi = createApi({
             invalidatesTags:["User"]
        }),
        UploadAvatar: builder.mutation({
-        query(body) {
-            return {
-                url:'/me/upload_avatar',
-                method:'PUT',
-                body,
-            };
-        },
-        invalidatesTags:["User"]
-   }),
+            query(body) {
+                return {
+                    url:'/me/upload_avatar',
+                    method:'PUT',
+                    body,
+                };
+            },
+            invalidatesTags:["User"]
+        }),
     }),
 });
 
