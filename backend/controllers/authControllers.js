@@ -5,7 +5,7 @@ import sendToken from "../utils/sendToken.js";
 import { getResetPasswordTemplate } from "../utils/emailTemplates.js";
 import sendEmail from "../utils/sendEmail.js";
 import crypto from "crypto";
-import { upload_file } from "../utils/cloudnary.js";
+import { delete_file, upload_file } from "../utils/cloudnary.js";
  
 //Register User =>/api/v1/register
 export const registerUser = catchAsyncErrors(async (req, res, next) =>{
@@ -52,7 +52,10 @@ export const logout = catchAsyncErrors(async (req, res, next) =>{
 //upload user avatar ---> /api/v1/me/upload_avatar
 export const uploadAvatar = catchAsyncErrors(async (req, res, next) =>{
     const avatarResponse = await upload_file(req.body.avatar,"Eshop/avatars");
-
+    //Delete the previous avatar
+    if(req?.user?.avatar?.url){
+        await delete_file(req?.user?.avatar?.public_id);
+    }
     const user = await User.findByIdAndUpdate(req?.user?._id,{
         avatar:avatarResponse
     });
