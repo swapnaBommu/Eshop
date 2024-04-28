@@ -8,6 +8,7 @@ import ProductDetails from './components/product/ProductDetails';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import Profile from './components/user/Profile';
+import UpdateProfile from './components/user/UpdateProfile';
 function App() {
   return (
     <Router>
@@ -21,6 +22,7 @@ function App() {
             <Route path='/login' element={<Login />}></Route>
             <Route path='/register' element={<Register />}></Route>
             <Route path='/me/profile' element={<Profile />}></Route>
+            <Route path='/me/update_profile' element={<UpdateProfile />}></Route>
 
           </Routes>
         </div>
