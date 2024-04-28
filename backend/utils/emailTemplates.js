@@ -474,7 +474,7 @@ export const getResetPasswordTemplate = (user, resetUrl) =>`
                   <tr>
                     <td class="content-cell">
                       <div class="f-fallback">
-                        <h1>Hi ${user?.name},</h1>
+                        <h1>Hi ${user},</h1>
                         <p>
                           You recently requested to reset your password for your
                           Eshop account. Use the button below to reset it.
@@ -521,7 +521,7 @@ export const getResetPasswordTemplate = (user, resetUrl) =>`
                           <a href="{{support_url}}">contact support</a> if you
                           have questions.
                         </p>
-                        <p>Thanks, <br />The ShopIT team</p>
+                        <p>Thanks, <br />The Eshop team</p>
 
                         <table class="body-sub" role="presentation">
                           <tr>
