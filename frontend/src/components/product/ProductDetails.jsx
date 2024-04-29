@@ -4,9 +4,12 @@ import { useParams } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import Loader from '../layout/Loader';
 import StarRatings from 'react-star-ratings';
+import { useDispatch } from 'react-redux';
+import { setCartItem } from '../../redux/features/cartSlice';
 
 
 const ProductDetails = () => {
+    const dispatch = useDispatch();
     const params = useParams();
     const { data,isLoading, error, isError } = useGetProductDetailsQuery(params?.id);
     const product = data?.product;
@@ -31,11 +34,11 @@ const ProductDetails = () => {
       //get the element using class name
       const count = document.querySelector(".count");
       
-      if(count.valueAsNumber >= product.stock){return;}
+      if(count.valueAsNumber >= product?.stock){return;}
       const qty = count.valueAsNumber + 1;
-      console.log('---------------',qty);
+      
       setQuantity(qty);
-      console.log('quant',quantity)
+      
     };
 
     //decrease qty
@@ -43,11 +46,25 @@ const ProductDetails = () => {
       
       //get the element using class name
       const count = document.querySelector(".count");
-      console.log('descr',count.valueAsNumber)
+     
       if(count.valueAsNumber <= 1)return;
 
       const qty = count.valueAsNumber - 1;
       setQuantity(qty);
+    }
+
+    //Handle cart item
+    const setItemToCart = () => {
+      const cartItem = {
+        product:product?._id,
+        name:product?.name,
+        price:product?.price,  
+        image:product?.images[0]?.url,
+        stock:product?.stock,
+        quantity
+      };
+      dispatch(setCartItem(cartItem));
+      toast.success("Item added to cart"); 
     }
 
     if(isLoading) return <Loader />
@@ -117,7 +134,8 @@ const ProductDetails = () => {
           type="button"
           id="cart_btn"
           className="btn btn-primary d-inline ms-4"
-          disabled=""
+          disabled={product.stock <= 0}
+          onClick={setItemToCart}
         >
           Add to Cart
         </button>
