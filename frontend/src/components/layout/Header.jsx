@@ -1,24 +1,31 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Search from './Search'
 import { useGetMeQuery } from '../../redux/api/userApi'
 import { useSelector } from 'react-redux';
 import {Link, useNavigate} from 'react-router-dom';
 import { useLazyLogoutQuery } from '../../redux/api/authApi';
-
+import toast from 'react-hot-toast';
 const Header = () => {
   const navigate = useNavigate();
   const {isLoading } = useGetMeQuery();
-  const [ logout ] = useLazyLogoutQuery();
+  const [ logout,{isError,isSuccess} ] = useLazyLogoutQuery();
   const { user } = useSelector((state) => state.auth);
   const { cartItems } = useSelector((state) => state.cart);
 
+  useEffect(()=>{
+    if(isError){
+      toast.error("Error in logout");
+    }
+    if(isSuccess){
+      toast.success("Logout successful");
+      navigate(0);
+    }
+  },[isError, isSuccess]);
 
   const logoutHandler = () =>{
     logout();
-    navigate(0);
+    
   }
-
-
 
   return (
     <nav className="navbar row">
