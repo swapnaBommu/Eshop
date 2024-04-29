@@ -11,6 +11,7 @@ const ProductDetails = () => {
     const { data,isLoading, error, isError } = useGetProductDetailsQuery(params?.id);
     const product = data?.product;
     const [activeImage, setActiveImage] = useState("");
+    const [quantity, setQuantity] = useState(1);
     //if the product changes we need to check if images exists we will display that image
     //else we will display default image
     useEffect (() =>{
@@ -24,7 +25,33 @@ const ProductDetails = () => {
           toast.error(error?.data?.message);
         }
       }, [isError] );
+
+      //Increase the qty of product
+    const increaseQty = () => {
+      //get the element using class name
+      const count = document.querySelector(".count");
+      
+      if(count.valueAsNumber >= product.stock){return;}
+      const qty = count.valueAsNumber + 1;
+      console.log('---------------',qty);
+      setQuantity(qty);
+      console.log('quant',quantity)
+    };
+
+    //decrease qty
+    const decreaseQty = () => {
+      
+      //get the element using class name
+      const count = document.querySelector(".count");
+      console.log('descr',count.valueAsNumber)
+      if(count.valueAsNumber <= 1)return;
+
+      const qty = count.valueAsNumber - 1;
+      setQuantity(qty);
+    }
+
     if(isLoading) return <Loader />
+
   return (
     <div className="row d-flex justify-content-around">
       <div className="col-12 col-lg-5 img-fluid" id="product_image">
@@ -77,14 +104,14 @@ const ProductDetails = () => {
 
         <p id="product_price">{product?.price}</p>
         <div className="stockCounter d-inline">
-          <span className="btn btn-danger minus">-</span>
+          <span className="btn btn-danger minus" onClick={decreaseQty}>-</span>
           <input
             type="number"
             className="form-control count d-inline"
-            value="1"
+            value={quantity}
             readonly
           />
-          <span className="btn btn-primary plus">+</span>
+          <span className="btn btn-primary plus" onClick={increaseQty}>+</span>
         </div>
         <button
           type="button"
