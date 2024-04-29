@@ -108,14 +108,13 @@ export const forgotPassword = catchAsyncErrors(async(req, res, next) => {
 export const resetPassword = catchAsyncErrors(async(req, res, next) => {
  
     //Hash the url Token
-    const resetPasswordToken = crypto.createHash("sha256")
-    .update(req.params.token)
-    .digest("hex");
+    const resetPasswordToken = crypto.createHash('sha256').update(req.params.token).digest("hex");
 
     const user = await User.findOne({
         resetPasswordToken,
         resetPasswordExpire: { $gt: Date.now()}
     });
+    console.log('**********************************',user)
     if(!user) {
         return next(new ErrorHandler('Password reset token is invalid or has been expired', 400));
     }
@@ -128,7 +127,10 @@ export const resetPassword = catchAsyncErrors(async(req, res, next) => {
     //set the user password token to undefined
     user.resetPasswordToken = undefined;
     user.resetPasswordExpire = undefined;
- 
+    console.log('----------after reset',user)
+    return res.json({
+        message:"done"
+    })
 });
 
 //Get current user  profile --> /api/v1/me
