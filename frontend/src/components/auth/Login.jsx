@@ -3,7 +3,7 @@ import { useLoginMutation } from '../../redux/api/authApi';
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-
+import MetaData from '../layout/MetaData';
 import { useNavigate } from 'react-router-dom';
 const Login = () => {
     const navigate = useNavigate();
@@ -34,6 +34,8 @@ const Login = () => {
         login(loginData);
     }
   return (
+    <>
+    <MetaData title={"Login"}/>
     <div className="row wrapper">
       <div className="col-10 col-lg-5">
         <form
@@ -81,6 +83,7 @@ const Login = () => {
         </form>
       </div>
     </div>
+    </>
   )
 }
 
