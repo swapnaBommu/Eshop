@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from 'react'
 import UserLayout from '../layout/UserLayout'
-import { useSelector } from 'react-redux';
+
 import { useUpdatePasswordMutation } from '../../redux/api/userApi';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';

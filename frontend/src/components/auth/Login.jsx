@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useLoginMutation } from '../../redux/api/authApi';
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import { useNavigate } from 'react-router-dom';
 const Login = () => {
@@ -10,7 +11,7 @@ const Login = () => {
     const [email, setEmail] = useState("");
     const [password,setPassword] = useState("");
 
-    const [ login, { isLoading, error, data} ] = useLoginMutation();
+    const [ login, { isLoading, error} ] = useLoginMutation();
 
     const {isAuthenticated} = useSelector((state) => state.auth);
 
@@ -64,7 +65,7 @@ const Login = () => {
             />
           </div>
 
-          <a href="/password/forgot" className="float-end mb-4">Forgot Password?</a>
+          <Link to="/password/forgot" className="float-end mb-4">Forgot Password?</Link>
 
           <button id="login_button" 
                     type="submit" 
@@ -75,7 +76,7 @@ const Login = () => {
           </button>
 
           <div className="my-3">
-            <a href="/register" className="float-end">New User?</a>
+            <Link to="/register" className="float-end">New User?</Link>
           </div>
         </form>
       </div>

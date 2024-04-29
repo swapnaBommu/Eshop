@@ -1,6 +1,6 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
 import { setUser, setIsAuthenticated, setLoading } from '../features/userSlice';
-import UpdateProfile from '../../components/user/UpdateProfile';
+
 export const userApi = createApi({
     reducerPath:"userApi",
     baseQuery:fetchBaseQuery({baseUrl: "/api/v1"}),
@@ -52,7 +52,22 @@ export const userApi = createApi({
             },
             invalidatesTags:["User"]
         }),
+        ForgotPassword: builder.mutation({
+            query(body) {
+                return {
+                    url:'/password/forgot',
+                    method:'POST',
+                    body,
+                };
+            },
+            invalidatesTags:["User"]
+        }),
     }),
 });
 
-export const { useGetMeQuery, useUpdateProfileMutation, useUploadAvatarMutation, useUpdatePasswordMutation  } = userApi;
+export const { useGetMeQuery,
+    useUpdateProfileMutation,
+    useUploadAvatarMutation,
+    useUpdatePasswordMutation,
+    useForgotPasswordMutation
+ } = userApi;
