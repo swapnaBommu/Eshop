@@ -19,7 +19,7 @@ export const cartSlice = createSlice({
             if(isItemExist){
                 //update the value of cart
                 state.cartItems = state.cartItems.map((i) =>
-                i.product === isItemExist.payload ? item : i
+                i.product === isItemExist.product ? item : i
             );
             } else{
                 //create new item
@@ -29,7 +29,7 @@ export const cartSlice = createSlice({
             localStorage.setItem("cartItems", JSON.stringify(state.cartItems))
         },
         removeCartItem:(state,action) => {
-            state.cartItems = state.cartItems.filter(
+            state.cartItems = state?.cartItems?.filter(
                 (i) => i.product !== action.payload
             );
         },
