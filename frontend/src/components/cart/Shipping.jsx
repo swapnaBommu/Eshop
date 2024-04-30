@@ -3,10 +3,11 @@ import MetaData from '../layout/MetaData'
 import countryList from 'iso3166-2-db/countryList/en';
 import { useDispatch, useSelector } from "react-redux";
 import { saveShippingInfo } from '../../redux/features/cartSlice';
+import { useNavigate } from 'react-router-dom';
 
 
 const Shipping = () => {
-
+  const navigate = useNavigate();
   const countriesList = Object.values(countryList);
   
   const dispatch = useDispatch();
@@ -37,7 +38,8 @@ const Shipping = () => {
   const submitHandler = (e) =>{
     e.preventDefault();
 
-    dispatch(saveShippingInfo({address,city,phoneNo,zipCode,country}))
+    dispatch(saveShippingInfo({address,city,phoneNo,zipCode,country}));
+    navigate("/confirm_order")
   }
   return (
     <>
