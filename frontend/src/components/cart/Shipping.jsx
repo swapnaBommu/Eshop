@@ -4,6 +4,7 @@ import countryList from 'iso3166-2-db/countryList/en';
 import { useDispatch, useSelector } from "react-redux";
 import { saveShippingInfo } from '../../redux/features/cartSlice';
 import { useNavigate } from 'react-router-dom';
+import CheckOutSteps from './CheckOutSteps';
 
 
 const Shipping = () => {
@@ -44,6 +45,7 @@ const Shipping = () => {
   return (
     <>
     <MetaData  title={"Shipping info"}/>
+    <CheckOutSteps shipping />
     <div className="row wrapper mb-5">
       <div className="col-10 col-lg-5">
         <form
