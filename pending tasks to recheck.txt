@@ -1,3 +1,3 @@
 1. reset password in fornt end
-2.Increase and decrease quantity is not working in the cart
 2. in BE also issues are there 
+3. Before deployment we need not include the config info in git7

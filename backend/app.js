@@ -6,6 +6,8 @@ import errorMiddleware from './middlewares/errors.js';
 import productRoutes from "./routers/products.js";
 import authRoutes from "./routers/auth.js";
 import orderRoutes from "./routers/order.js";
+import paymentRoutes from "./routers/payment.js";
+
 const app = express()
 
 //Handle uncaught exception
@@ -27,6 +29,7 @@ app.use(cookieParser());
 app.use("/api/v1", productRoutes);
 app.use("/api/v1", authRoutes);
 app.use("/api/v1", orderRoutes)
+app.use("/api/v1", paymentRoutes);
 
 //using error middleware
 app.use(errorMiddleware);
