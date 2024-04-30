@@ -32,7 +32,7 @@ const productItem = ({product, columnSize}) => {
                       ({product?.numOfReviews})
                     </span>
                   </div>
-                  <p className="card-text mt-2">₹{product.price}</p>
+                  <p className="card-text mt-2">${" "}{product.price}</p>
                   <Link to={`/product/${product?._id}`} id="view_btn" className="btn btn-block">
                     View Details
                   </Link>

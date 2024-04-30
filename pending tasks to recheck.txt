@@ -1,7 +1,14 @@
 1. reset password in fornt end
 2. in BE also issues are there 
 3. Before deployment we need not include the config info in git7
+4. Integrate stripe for payment not working.
 
 stripe secrete key
 
 whsec_681a281dec379f317079285f9e2ec08484cbb69dbf40bef6ccf1c5d6f40fe38b
+
+tax_rates:["txr_1PBGR0SJdvBR2ZydlKQc7Zxr"]
+const shipping_rate =   body?.itemsPrice >= 200
+            ? "shr_1PBGMDSJdvBR2ZydPczFqecs"
+            : "shr_1PBGQ0SJdvBR2Zyd5afmzxXE";
+        
