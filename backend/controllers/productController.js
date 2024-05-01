@@ -2,7 +2,7 @@ import catchAsyncError from "../middlewares/catchAsyncError.js";
 import Product from "../models/product.js"
 import ErrorHandler from "../utils/errorHandler.js";
 import APIFilters from "../utils/apiFilters.js";
-
+import Order from "../models/order.js";
 //get products => /api/v1/products
 export const getProducts = catchAsyncError( async (req,res) =>{
     const resPerPage = 4;
@@ -155,3 +155,20 @@ export const deleteReview = catchAsyncError(async (req,res, next) =>{
     });
 
 });
+
+//can user review ==>/api/v1/can_review
+export const canUserReview = catchAsyncError(async (req,res, next) =>{
+    const orders = await Order.find({
+        user:req.user._id,
+        "orderItems.product":req.query.productId
+    });
+
+    if(orders.length === 0){
+        return res.status(200).json({   canReview: false  });
+    }
+    
+    res.status(200).json({
+        canReview: true 
+    });
+})
+
