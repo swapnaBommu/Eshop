@@ -28,15 +28,7 @@ export const orderApi = createApi({
     orderDetails:builder.query({
         query: (id) => `/orders/${id}`,
     }),
-    submitReview: builder.mutation({
-      query(body) {
-        return {
-          url: "/reviews",
-          method: "POST",
-          body,
-        };
-      },
-    }),
+   
   }),
 });
 
@@ -45,5 +37,5 @@ export const {
     useStripeCheckoutSessionMutation, 
     useMyOrdersQuery,
     useOrderDetailsQuery,
-    useSubmitReviewMutation
+
 } = orderApi;

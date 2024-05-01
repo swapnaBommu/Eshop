@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import StarRatings from 'react-star-ratings';
-import { useSubmitReviewMutation } from '../../redux/api/orderApi';
+import { useSubmitReviewMutation } from '../../redux/api/productsApi';
 import toast from 'react-hot-toast';
 
 const NewReview = ({productId}) => {
