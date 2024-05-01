@@ -1,5 +1,5 @@
 import express from "express";
-import { allorders, deleteOrder, getOrderDetails, myorders, newOrder, updateOrder } from "../controllers/orderControllers.js";
+import { allorders, deleteOrder, getOrderDetails, getSales, myorders, newOrder, updateOrder } from "../controllers/orderControllers.js";
 import { isAuthentictedUser,authorizeRoles } from "../middlewares/auth.js";
 
 const router = express.Router();
@@ -16,5 +16,7 @@ router.route("/admin/orders/:id")
 .put(isAuthentictedUser,authorizeRoles("admin"),updateOrder)
 .delete(isAuthentictedUser,authorizeRoles("admin"),deleteOrder);
 
+router.route("/admin/get_sales")
+        .get(isAuthentictedUser,authorizeRoles("admin"),getSales);
 
 export default router;
