@@ -4,9 +4,10 @@ import { useParams } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import Loader from '../layout/Loader';
 import StarRatings from 'react-star-ratings';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setCartItem } from '../../redux/features/cartSlice';
 import MetaData from '../layout/MetaData';
+import NewReview from '../reviews/NewReview';
 
 const ProductDetails = () => {
     const dispatch = useDispatch();
@@ -15,6 +16,7 @@ const ProductDetails = () => {
     const product = data?.product;
     const [activeImage, setActiveImage] = useState("");
     const [quantity, setQuantity] = useState(1);
+    const {isAuthenticated} = useSelector((state) => state.auth);
     //if the product changes we need to check if images exists we will display that image
     //else we will display default image
     useEffect (() =>{
@@ -156,10 +158,12 @@ const ProductDetails = () => {
         <p>{product?.description}</p>
         <hr />
         <p id="product_seller mb-3">Sold by: <strong>{product?.seller}</strong></p>
-
-        <div className="alert alert-danger my-5" type="alert">
-          Login to post your review.
-        </div>
+          {isAuthenticated ? <NewReview productId={product?._id}/> : (
+            <div className="alert alert-danger my-5" type="alert">
+            Login to post your review.
+          </div>
+          )}
+        
       </div>
     </div>
     </>

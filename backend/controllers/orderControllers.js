@@ -74,7 +74,7 @@ export const updateOrder = catchAsyncErrors(async (req, res, next) => {
     }
 
     //update product stock
-    order?.orderedItems?.forEach(async (item) => {
+    order?.orderItems?.forEach(async (item) => {
         const product = await Product.findById(item?.product.toString());
         
         if(!product){
