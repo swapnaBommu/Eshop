@@ -29,8 +29,8 @@ export const stripeCheckoutSession = catchAsyncErrors(
 
     const shipping_rate =
     body?.itemsPrice >= 200
-    ? "shr_1PBGMDSJdvBR2ZydPczFqecs"
-    : "shr_1PBGQ0SJdvBR2Zyd5afmzxXE";
+    ? "shr_1PBWUoRxF4oSO888VKa1ONBP"
+    : "shr_1PBWVTRxF4oSO888POq4Sau5"
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
