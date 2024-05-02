@@ -21,6 +21,16 @@ export const getProducts = catchAsyncError( async (req,res) =>{
     });
 });
 
+//get products  - ADMIN => /api/v1/admin/products
+export const getAdminProducts = catchAsyncError( async (req,res) =>{
+    
+    const products = await Product.find();
+    
+    res.status(200).json({
+        products
+    });
+});
+
 //create new product => /api/v1/admin/products
 export const newProduct = catchAsyncError(async (req,res) =>{
     req.body.user = req.user._id;
