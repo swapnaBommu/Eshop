@@ -61,39 +61,47 @@ export const allorders = catchAsyncErrors(async (req, res, next) => {
     })
 });
 
-//update order - ADMIN => /api/v1/admin/orders/:id
+// Update Order - ADMIN  =>  /api/v1/admin/orders/:id
 export const updateOrder = catchAsyncErrors(async (req, res, next) => {
     const order = await Order.findById(req.params.id);
-
-    if(!order){
-        return next(new ErrorHandler("No order found with this id",404));
+  
+    if (!order) {
+      return next(new ErrorHandler("No Order found with this ID", 404));
     }
-
-    if(order?.orderStatus === "Delivered"){
-        return next(new ErrorHandler("You have already delivered this order",400));
+  
+    if (order?.orderStatus === "Delivered") {
+      return next(new ErrorHandler("You have already delivered this order", 400));
     }
-
-    //update product stock
-    order?.orderItems?.forEach(async (item) => {
-        const product = await Product.findById(item?.product.toString());
-        
-        if(!product){
-            return next(new ErrorHandler("No product found with this id",404));
-        }
-
-        product.stock = product.stock - quantity;
-        await product.save();
-    });
-
+  
+    let productNotFound = false;
+  
+    // Update products stock
+    for (const item of order.orderItems) {
+      const product = await Product.findById(item?.product?.toString());
+      if (!product) {
+        productNotFound = true;
+        break;
+      }
+      product.stock = product.stock - item.quantity;
+      await product.save({ validateBeforeSave: false });
+    }
+  
+    if (productNotFound) {
+      return next(
+        new ErrorHandler("No Product found with one or more IDs.", 404)
+      );
+    }
+  
     order.orderStatus = req.body.status;
     order.deliveredAt = Date.now();
+  
     await order.save();
-
-    res.status(201).json({
-        success: true 
-    })
+  
+    res.status(200).json({
+      success: true,
+    });
 });
-
+  
 //delete order - admin => /api/v1/admin/orders/:id
 export const deleteOrder = catchAsyncErrors(async (req, res, next) => {
     const order = await Order.findById(req.params.id);
