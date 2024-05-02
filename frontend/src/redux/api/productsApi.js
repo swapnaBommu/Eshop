@@ -7,7 +7,7 @@ export const productApi = createApi({
     baseQuery:fetchBaseQuery({baseUrl: "/api/v1"}),
     // define our endpoints, here we are fetching data we should use query function
     //query: An endpoint definition that retrieves data
-    tagTypes:["Product"],
+    tagTypes:["Product", "AdminProducts"],
     endpoints:(builder) => ({
         getProducts : builder.query({
             query: (params) =>({
@@ -41,8 +41,18 @@ export const productApi = createApi({
         }), 
         getAdminProducts : builder.query({
             query: () => `/admin/products`,
-            
-        }), 
+            providesTags:["AdminProducts"]
+        }),
+        createProduct: builder.mutation({
+            query(body) {
+              return {
+                url: "/admin/products",
+                method: "POST",
+                body,
+              };
+            },
+            invalidatesTags: ["AdminProducts"],
+        }),
     }),
 });
 
@@ -50,4 +60,6 @@ export const {  useGetProductsQuery,
     useGetProductDetailsQuery,
     useSubmitReviewMutation,
      useCanUserReviewQuery,
-    useGetAdminProductsQuery } = productApi;
+    useGetAdminProductsQuery,
+    useCreateProductMutation
+ } = productApi;
