@@ -56,13 +56,13 @@ const AdminRoutes = () => {
             </ProtectedRoute>
         } 
     />
-    <Route path='/admin/users' 
+    {/* <Route path='/admin/users' 
             element={
             <ProtectedRoute admin={true}> 
                 <ListUsers  />
             </ProtectedRoute>
         } 
-    />
+    /> */}
 
     <Route path='/admin/users/:id' 
             element={
